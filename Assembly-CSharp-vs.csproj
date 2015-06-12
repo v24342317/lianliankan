@@ -39,14 +39,15 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>e:/Unity4.3.4/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>E:/Unity4.3.4/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>e:/Unity4.3.4/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>E:/Unity4.3.4/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\build.cs" />
+     <Compile Include="Assets\Script\tileCode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,6 +8,8 @@ public class build : MonoBehaviour {
     public int height=4;
     public float offset = 1.2f;
 
+    public int[] test_map;
+
 	// Use this for initialization
 	void Start () {
         buildTile();
@@ -18,17 +20,30 @@ public class build : MonoBehaviour {
 	
 	}
 
-    private void buildTile() {
-        for (int i = 0; i < width;i++ )
+    void Awake()
+    {
+        test_map = new int[]
         {
-            for (int j = 0; j < height;j++ )
-            {
-                GameObject t = (GameObject)Instantiate(tile, new Vector3(i * offset, -j * offset, 0), Quaternion.identity);
-                string name = i.ToString() + "" + j.ToString();
-               
-                t.GetComponentInChildren<TextMesh>().text = name;
-                t.GetComponentInChildren<TextMesh>().name = name;
+            1,2,3,4,
+            5,6,7,8,
+            9,10,11,12,
+            13,14,15,16
+        };
+    }
 
+    private void buildTile() {
+        for (int x = 0; x < width;x++ )
+        {
+            for (int y = 0; y < height;y++ )
+            {
+                GameObject t = (GameObject)Instantiate(tile, new Vector3(x * offset, -y * offset, 0), Quaternion.identity);
+                string name = x.ToString() + y.ToString();
+                t.GetComponentInChildren<tileCode>().x = x;
+                t.GetComponentInChildren<tileCode>().y = y;
+                t.GetComponentInChildren<tileCode>().value = test_map[y * height + x];
+
+                t.GetComponentInChildren<TextMesh>().text = test_map[y* height + x].ToString();
+                t.GetComponentInChildren<TextMesh>().name = name;
                 t.name = name;
                 //GameObject[] go=t.GetComponentsInChildren<GameObject>();
             }
