@@ -20,12 +20,21 @@ public class build : MonoBehaviour {
 	
 	}
 
+    public void refresh(GameObject[] obj) {
+        foreach (GameObject g in obj)
+        {
+            test_map[(int)g.GetComponentInChildren<tileCode>().y * height + (int)g.GetComponentInChildren<tileCode>().x] = 0;
+            g.GetComponent<tileCode>().value = 0;
+            g.GetComponentInChildren<TextMesh>().text = "0";
+        }
+    }
+
     void Awake()
     {
         test_map = new int[]
         {
             1,2,3,4,
-            5,6,7,8,
+            5,6,1,8,
             9,10,11,12,
             13,14,15,16
         };

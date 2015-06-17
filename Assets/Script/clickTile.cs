@@ -9,6 +9,7 @@ public class clickTile : MonoBehaviour {
 
     GameObject[] obj= new GameObject[2];
     LineRenderer line;
+    int[] temp_map;
 
 	// Use this for initialization
 	void Start () {
@@ -16,7 +17,15 @@ public class clickTile : MonoBehaviour {
         line = lineObj.AddComponent<LineRenderer>();
         line.SetWidth(0.1f,0.1f);
         line.SetVertexCount(2);
+        temp_map = GetComponent<build>().test_map;
 	}
+
+    bool isSame() {
+        if (obj[0].GetComponent<tileCode>().value == obj[1].GetComponent<tileCode>().value) {
+            return true;
+        }
+        return false;
+    }
 
     void drawLine(int linkType) {
         if (linkType==0)
@@ -29,6 +38,21 @@ public class clickTile : MonoBehaviour {
     void drawLineZero() {
         line.SetPosition(0, Vector3.zero);
         line.SetPosition(1, Vector3.zero);
+    }
+
+    void deleteTile() {
+        foreach (GameObject g in obj)
+        {
+            Destroy(g);
+        }
+    }
+
+    void initSelectedObj() 
+    {
+        foreach (GameObject g in selected)
+        {
+            g.transform.position = new Vector3(-10f, -2f, 0f);
+        }
     }
 
 	// Update is called once per frame
@@ -44,15 +68,22 @@ public class clickTile : MonoBehaviour {
                     firstSelected = false;
                     obj[1]=hit.transform.gameObject;
                     selected[1].transform.position = obj[1].transform.position+new Vector3(0,0,1);
-                    drawLine(0);
+
+                    if (isSame())
+                    {
+                        drawLine(0);
+                        gameObject.GetComponent<build>().refresh(obj);
+                        Invoke("drawLineZero", 2.0f);
+                        Invoke("deleteTile", 2.0f);
+                        Invoke("initSelectedObj", 2.0f);
+                    }
+                    else {
+                        initSelectedObj();
+                        drawLineZero();
+                    }
                 }
                 else 
-                {
-                    drawLineZero();
-                    foreach (GameObject g in selected)
-                    {
-                        g.transform.position = new Vector3(-10f,-2f,0f);
-                    }
+                {                
                     obj = null;
                     obj= new GameObject[2];
                     firstSelected = true;
